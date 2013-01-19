@@ -1,0 +1,37 @@
+<div id="main_body"> 
+<h1>出租设备</h1> 
+<table>
+  <tr>
+    <th>#</th>  	
+    <th>测试名称</th>
+    <th>简称</th>
+    <th>内容</th>    
+    <th>价格（￥/hr)</th>  
+    <% if has_update_create_right? %>
+      <th>有效?</th>
+    <% end %>
+    <th></th>
+
+ 
+  </tr>
+
+<% @lease_items.each do |item| %>
+  <tr>
+    <td><%= link_to item.id.to_s, SUBURI + "/view_handler?index=1&url=#{lease_item_path(item)}" %></td>  	
+    <td><%= item.name %></td>
+    <td><%= item.short_name %></td>
+    <td><%= item.description %></td>    
+    <td><%= item.hourly_rate %></td>    
+    <td><%= item.active if has_update_create_right? %></td>
+    <td><%= link_to 'Edit', SUBURI + "/view_handler?url=#{edit_lease_item_path(item)}&index=1" if has_update_create_right? %></td>
+
+  </tr>
+<% end %>
+</table>
+<p>
+  <%= link_to '输入设备', SUBURI + "/view_handler?url=#{new_lease_item_path}&index=1" if has_update_create_right? %> |
+  <%= link_to to_chn(:search), search_lease_items_path %>|
+  <%= link_to 'Back', search_lease_items_path %> |
+  
+
+</div>

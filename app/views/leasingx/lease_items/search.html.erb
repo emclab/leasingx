@@ -1,0 +1,12 @@
+<div id="main_body">
+<h1><%=to_chn(:search)%> - 出租设备</h1>
+
+
+<%= simple_form_for @lease_item,  :method => :put, :url => {:action => 'search_results'}  do |f| %>    
+  <%= f.input :keyword, :label => to_chn(:keyword) + ":" %>  
+  <%= f.input :min_hourly_rate, :as => :string, :label => '最低收费:' %> 
+  <%= f.input :max_hourly_rate, :as => :string, :label => '最高收费:' %>
+  <%= f.button :submit, to_chn(:search) %>  
+<% end %> 
+
+</div>

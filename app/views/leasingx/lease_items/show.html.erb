@@ -1,0 +1,33 @@
+<div id="main_body">
+<h1>出租设备</h1>
+ 
+<p class="notice"><%= notice %></p>
+ 
+<p>
+  <b>名称:</b>
+  <%= @lease_item.name %>
+</p>
+<p>
+  <b>简称:</b>
+  <%= @lease_item.short_name %>
+</p> 
+<p>
+  <b>内容:</b>
+  <%= @lease_item.description %>
+</p>
+ 
+<p>
+  <b>项目收费（￥/小时）:</b>
+  <%= @lease_item.hourly_rate %>
+</p>
+<p>
+  <b>有效?:</b>
+  <%= @lease_item.active %>
+</p>
+<p>
+  <b>输入/更改:</b>
+  <%= @lease_item.input_by.name if @lease_item.input_by_id.present? %>
+</p>
+ 
+<%= link_to 'Back', SUBURI + "/view_handler?index=0" %>
+</div>

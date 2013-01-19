@@ -1,0 +1,87 @@
+<div id="main_body">
+<h1>租赁Booking</h1>
+ 
+<p class="notice"><%= notice %></p>
+ 
+<p>
+  <b>设备名称:</b>
+  <%= @lease_booking.lease_item.name %>
+</p>
+ 
+<p>
+  <b>客户:</b>
+  <%= @lease_booking.customer.name %>
+</p>
+<p>
+  <b>客户联系人:</b>
+  <%= @lease_booking.leasee_name %>
+</p> 
+<p>
+  <b>联系电话:</b>
+  <%= @lease_booking.leasee_phone %>
+</p>
+<p>
+  <b>开始时间:</b>
+  <%= @lease_booking.start_time %>
+</p>
+<p>
+  <b>结束时间</b>
+  <%= @lease_booking.end_time %>
+</p>
+<p>
+  <b>标准价格￥/小时</b>
+  <%= @lease_booking.item_hourly_rate %>
+</p>
+<p>
+  <b>小时数:</b>
+  <%= @lease_booking.total_hour %>
+</p>
+<p>
+  <b>实际价格/￥小时:</b>
+  <%= @lease_booking.charge_rate %>
+</p>
+<p>
+  <b>折扣%:</b>
+  <%= @lease_booking.discount %>
+</p>
+<p>
+  <b>租赁目的:</b>
+  <%= @lease_booking.lease_purpose %>
+</p>
+<p>
+  <b>完成？:</b>
+  <%= @lease_booking.completed %>
+</p>
+<p>
+  <b>取消？:</b>
+  <%= @lease_booking.cancelled %>
+</p>
+<p>
+  <b>注释:</b>
+  <%= @lease_booking.note %>
+</p>
+<p>
+  <b>业务员:</b>
+  <%= @lease_booking.sales.name %>
+</p>
+<% if !@lease_booking.input_by_id.nil? && @lease_booking.input_by_id > 0 %>
+<p>
+  <b>输入/更改:</b>
+  <%= @lease_booking.input_by.name %>
+</p>
+<% end %>
+<p>
+  <b>租赁Log:</b>
+  <ul>
+  <% @lease_booking.lease_logs.order("created_at DESC").each do |log| %>
+  <li>
+  	<%= link_to @log.input_by.name + ", 关于： "+log.subject + ", " + log.created_at.strftime('%Y-%m-%d').to_s, SUBURI + "/view_handler?index=1&url=#{lease_booking_lease_log_path(log.lease_booking_id, log.id)}" %>
+  </li>
+  <% end %>
+  </ul>
+</p>
+ 
+<%= link_to 'Close', SUBURI + "/view_handler?index=0", :id => 'close' %>
+<%= link_to @lease_booking.customer.short_name, SUBURI + "/view_handler?index=1&url=#{customer_path(@lease_booking.customer_id)}", :id => 'show_customer_link' %>
+<%= link_to " 输入Log", new_lease_booking_lease_log_path(@lease_booking, :format => :js), :remote => true, :id => 'new_log_link' %>
+</div>

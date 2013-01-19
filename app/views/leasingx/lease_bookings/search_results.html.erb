@@ -1,0 +1,57 @@
+<div id="main_body">
+<h1><%=to_chn(:search_results)%> - 场地设备租赁</h1>
+<p><%=@search_params %></p>
+<p>总次数： <%=@lease_bookings.count %>, 
+	小时数： <%= @lease_bookings.sum('total_hour') %>, 
+	客户数量： <%= @lease_bookings.select("DISTINCT(customer_id)").count %>, 
+	测试设备种类：<%= @lease_bookings.select("DISTINCT(lease_item_id)").count %>,
+	完成次数： <%= @lease_bookings.where('completed = ?', true).count %>, 
+	完成小时数： <%= @lease_bookings.where('completed = ?', true).sum('total_hour') %>, 	
+	取消次数： <%= @lease_bookings.where('cancelled = ?', true).count %>, 
+	取消小时数： <%= @lease_bookings.where('cancelled = ?', true).sum('total_hour') %>
+</p>
+<table>
+  <tr>
+  	<th>#</th>
+    <th>租赁日期</th>
+    <th>设备名称</th>    
+    <th>开始时间</th>
+    <th>小时数</th>
+    <th>客户</th>
+    <th>业务员</th>
+    <th>完成？</th>
+    <th>取消？</th>    
+    <th></th>
+    <th></th>
+  </tr>
+  <% @lease_bookings.each do |booking| %>
+    <tr>
+      <% if has_show_right?(booking) %>
+        <td><%= link_to booking.id.to_s, SUBURI + "/view_handler?index=1&url=#{lease_booking_path(booking)}" %></td>
+      <% else %>
+        <td><%= booking.id.to_s %></td>
+      <% end %>
+      <td><%= booking.lease_date %></td>      
+      <td><%= booking.lease_item.name %></td>
+      <td><%= booking.start_time %></td>
+      <td><%= booking.total_hour %></td>
+      <td><%= booking.customer.short_name %></td>  
+      <td><%= booking.sales.name %></td>  
+      <td><%= booking.completed %></td> 
+      <td><%= booking.cancelled %></td>
+      <% if has_update_right? %>
+        <td><%= link_to "Edit", SUBURI + "/view_handler?index=1&url=#{edit_lease_booking_path(booking)}" %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+<p>
+<%= link_to 'Close', SUBURI + "/view_handler?index=0" %> | 
+<% if has_create_right? %>
+  <%= link_to "输入Booking", SUBURI + "/view_handler?index=1&url=#{new_lease_booking_path}" %> | 
+<% end %>
+<%= link_to to_chn(:search), search_lease_bookings_path %>
+</p>
+</div>

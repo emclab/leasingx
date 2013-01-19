@@ -1,0 +1,8 @@
+
+<%= simple_form_for([@lease_booking, @lease_log]) do |f| %>    
+ 
+  <%= f.input :subject, :label => "关于：" %>    
+  <%= f.input :total_hour, :label => "使用时数： ", :collection => set_total_hour %>
+  <%= f.input :log, :label => "内容 ：", :input_html => {:rows => 6} %>   
+  <%= f.button :submit, '保存' %>  
+<% end %> 

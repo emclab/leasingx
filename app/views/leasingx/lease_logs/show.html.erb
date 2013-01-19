@@ -1,0 +1,42 @@
+<div id="main_body">
+<h1>出租Log内容</h1>
+ 
+<p class="notice"><%= notice %></p>
+<p>
+<b>设备名： </b>
+<%= @lease_booking.lease_item.name %>
+</p>
+
+<p>
+<b>客户： </b>
+<%= @lease_log.lease_booking.customer.short_name %>
+</p>
+
+<p>
+  <b>关于:</b>
+  <%= @lease_log.subject %>
+</p>
+ 
+<p>
+  <b>内容:</b>
+  <%= @lease_log.log %>
+  
+</p>
+ 
+<p>
+  <b>使用时数:</b>
+  <%= @lease_log.total_hour %>
+</p>
+
+<% if !@lease_log.input_by_id.nil? && @lease_log.input_by_id > 0 %>
+<p>
+  <b>输入/更改:</b>
+  <%= @lease_log.input_by.name %>
+</p>
+<% end %>
+
+<%= link_to 'Back', SUBURI + "/view_handler?index=0" %>
+<% if has_destroy_right? %>
+  <%= link_to '删除', lease_booking_lease_log_path(@lease_log.lease_booking_id, @lease_log.id), :confirm => "删除Log？", :method => :delete, :remote => true %>
+<% end %>
+</div>

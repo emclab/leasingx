@@ -1,0 +1,21 @@
+<% if @start_time.nil? || @start_time == "" %>
+	$('#lease_booking_start_time').append('<option value="">选开始时间</option>');
+  <% start_time_slots(@lease_booking, nil).each do |a| %>
+    $('#lease_booking_start_time').append('<option value="<%= a %>"><%= a %></option>');
+    $('#lease_booking_end_time').append('<option value="">选结束时间</option>');
+  <% end %>
+
+<% else %>
+	$('#lease_booking_end_time').append('<option value="">选结束时间</option>');
+
+   <% end_time_slots(@lease_booking, nil, @start_time).each do |b| %>
+
+     $('#lease_booking_end_time').append('<option value="<%= b %>"><%= b %></option>');
+     $('#start_time').val('');
+   <% end %>
+<% end %>
+<% if @lease_item %>
+  $('#lease_booking_hourly_rate').html('标准价格/小时：<%=@lease_item.hourly_rate%>')
+  var discount = parseInt((1 - $('#lease_booking_charge_rate').val()/<%=@lease_item.hourly_rate%>)*100);
+  $('#lease_booking_discount').val(discount)
+<% end %>

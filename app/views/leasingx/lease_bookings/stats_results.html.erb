@@ -1,0 +1,25 @@
+<div id="main_body">
+	<h1>设备出租Booking统计</h1>
+<p><%= @stats_params %></p>
+<table>
+  <tr>
+    <th>时段</th>       
+    <th>金额（￥）</th>
+    <th>(有效)小时数</th>
+    <th>(平均)￥/小时</th>
+    <th>客户数</th>
+  </tr>
+  <% @lease_bookings_stats.each do |booking| %>
+    <tr>
+      <td><%= booking.lease_date %></td>           
+      <td><%= booking.revenue %></td>
+      <td><%= booking.total_hours %></td>
+      <td><%= (booking.revenue.to_f/booking.total_hours.to_f).round(2) if booking.total_hours.to_f > 0 %></td>
+      <td><%= booking.num_customer %></td>
+    </tr>
+  <% end %>
+</table>
+<p>
+<%= link_to 'Close',  stats_lease_bookings_path %>
+</p>
+</div>

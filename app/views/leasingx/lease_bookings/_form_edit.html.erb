@@ -1,0 +1,28 @@
+<%= simple_form_for @lease_booking do |f| %>
+  <%= hidden_field_tag :start_time, params[:start_time] %>
+  <%= hidden_field_tag :form_type, 'edit' %>
+  <%= f.input :lease_date, :label => "租赁日期 ：", :as => :string %>
+  <%= f.input :customer_id, :collection => Customerx::Customer.active_cust.all(:order => 'name'), :label_method => :name, :value_method => :id, :prompt => "选客户", :label => "客户 ："  %>
+  <%= f.input :lease_item_id, :collection => Leasingx::LeaseItem.active_lease_item.all(:order => 'name'), :label_method => :name, :value_method => :id, :prompt => "选设备", :label => "设备 ："  %>
+  <%= link_to '重新选时间', @lease_booking, :id => 're_enter_lease_booking_start_time' %>
+  <%= f.input :start_time, :label => "开始时间：", :collection => @start_time_options, :prompt => "选开始时间" %>
+  <%= f.input :end_time, :label => "结束时间：" , :collection => @end_time_options, :prompt => "选结束时间" %>
+  <%= f.input :total_hour, :label => "小时数 ：" %>
+  <div style="padding-left:5px">价格￥/小时：&nbsp;&nbsp; <%= @lease_booking.charge_rate %> <p></p>
+  <div style="padding-left:5px">折扣 %：&nbsp;&nbsp; <%= @lease_booking.discount %> <p></p>
+
+  <%= f.input :leasee_name, :label => "承租人 ：" %>
+  <%= f.input :leasee_phone, :label => "承租人电话：" %>
+  <%= f.input :lease_purpose, :collection => ['产品开发', '达标测试', '产品投放市场前测试', '应客户要求测试','其它'], :as => :radio_buttons, :label => "租赁目的: " %>
+  <%= f.input :completed, :label => "完成? ：", :as => :radio_buttons %>
+  <%= f.input :cancelled, :label => "取消?：", :as => :radio_buttons %>
+  <%= f.input :note, :as => :text, :input_html => {:rows => '2', :cols => '60' }, :label => "注释 ：" %>
+  <% if has_update_right? %>
+    <%= f.input :sales_id, :collection => return_users.all(:order => 'name'), :label_method => :name, :value_method => :id, :prompt => "选" + to_chn(:sales), :label => to_chn(:sales) + ":"  %>
+  <% else %>
+    <div style="padding-left:0px">业务员：&nbsp;&nbsp; <%= @lease_booking.sales.name %></div>
+  <% end %>
+  <%= f.button :submit, '更新' %>
+<% end %>
+
+

@@ -1,0 +1,16 @@
+<% if @start_time.nil? || @start_time == "" %>
+	$('#lease_booking_start_time').append('<option value="">选开始时间</option>');
+<% start_time_slots(@new_lease_booking, @lease_booking).each do |a| %>
+    $('#lease_booking_start_time').append('<option value="<%= a %>"><%= a %></option>');
+    $('#lease_booking_end_time').append('<option value="">选结束时间</option>');
+<% end %>
+
+<% else %>
+	$('#lease_booking_end_time').append('<option value="">选结束时间</option>');
+<%
+   end_time_slots(@new_lease_booking, @lease_booking, @start_time).each do |b|
+%>
+   $('#lease_booking_end_time').append('<option value="<%= b %>"><%= b %></option>');
+   $('#start_time').val('');
+<% end %>
+<% end %>

@@ -1,0 +1,10 @@
+<div id="main_body">
+<h1><%=to_chn(:search)%> - 场地设备租赁统计</h1>
+<%= simple_form_for @lease_booking, :method => :put, :url => { :action => 'stats_results' } do |f| %>    
+  <%= f.input :time_frame, :collection => return_time_frame, :label => "周期 ：", :selected => '周'  %>
+  <%= f.input :customer_id_search, :collection => Customer.active_cust.where("biz_status = ?", '1').order('name'), :label_method => :name, :value_method => :id, :prompt => "选客户", :label => "客户 ："  %>    
+  <%= f.input :lease_item_id_search, :collection => LeaseItem.active_lease_item.all(:order => 'name'), :label_method => :name, :value_method => :id, :prompt => "选设备", :label => "设备 ："  %>
+  <%= f.input :sales_id_search, :collection => User.active_sales.all(:order => 'name'), :label_method => :name, :value_method => :id, :prompt => "选" + to_chn(:sales), :label => to_chn(:sales) + ":"  %>    
+  <%= f.button :submit, to_chn(:stats) %>  
+<% end %> 
+</div>
