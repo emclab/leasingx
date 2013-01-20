@@ -16,7 +16,8 @@ module Leasingx
       
       describe "'index'" do
         it "should be successful" do
-          ugrp = FactoryGirl.create(:authentify_sys_user_group, :user_group_name => 'eng_dept_head')
+          zone = FactoryGirl.create(:authentify_zone)
+          ugrp = FactoryGirl.create(:authentify_sys_user_group, :user_group_name => 'eng_dept_head', :zone_id => zone.id)
           action = FactoryGirl.create(:authentify_sys_action_on_table, :action => 'show', :table_name => 'leasingx_lease_bookings')
           right = FactoryGirl.create(:authentify_sys_user_right, :sys_user_group_id => ugrp.id, :sys_action_on_table_id => action.id)
           ul = FactoryGirl.create(:authentify_user_level, :sys_user_group_id => ugrp.id )

@@ -10,10 +10,10 @@ gem "jquery-rails"
 gem 'will_paginate', '~> 3.0'
 
 
-gem 'authentify', :path => '../authentify/'
-gem 'customerx', :path => '../customerx/'
-#gem 'authentify', :git => 'http://github.com/emclab/authentify.git'
-#gem 'customerx', :git => 'http://github.com/emclab/customerx.git'
+#gem 'authentify', :path => '../authentify/'
+#gem 'customerx', :path => '../customerx/'
+gem 'authentify', :git => 'http://github.com/emclab/authentify.git'
+gem 'customerx', :git => 'http://github.com/emclab/customerx.git'
 
 # Declare any dependencies that are still in development here instead of in
 # your gemspec. These might include edge Rails or gems from your path or

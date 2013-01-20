@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111030531) do
+ActiveRecord::Schema.define(:version => 20130120225807) do
 
   create_table "authentify_sessions", :force => true do |t|
     t.string   "session_id", :null => false
@@ -62,7 +62,7 @@ ActiveRecord::Schema.define(:version => 20130111030531) do
     t.string   "user_type_desp"
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
-    t.string   "zone"
+    t.integer  "zone_id"
   end
 
   create_table "authentify_sys_user_rights", :force => true do |t|
@@ -102,31 +102,87 @@ ActiveRecord::Schema.define(:version => 20130111030531) do
     t.datetime "updated_at",                                   :null => false
   end
 
+  create_table "authentify_zones", :force => true do |t|
+    t.string   "zone_name"
+    t.string   "brief_note"
+    t.boolean  "active",        :default => true
+    t.integer  "ranking_order"
+    t.datetime "created_at",                      :null => false
+    t.datetime "updated_at",                      :null => false
+  end
+
+  create_table "customerx_customer_status_categories", :force => true do |t|
+    t.string   "cate_name"
+    t.string   "brief_note"
+    t.boolean  "active",             :default => true
+    t.integer  "ranking_order"
+    t.integer  "last_updated_by_id"
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+  end
+
   create_table "customerx_customers", :force => true do |t|
     t.string   "name"
     t.string   "short_name"
-    t.string   "contact"
-    t.string   "address"
-    t.string   "country"
+    t.date     "since_date"
+    t.text     "contact_info"
+    t.text     "address"
+    t.text     "shipping_address"
+    t.integer  "zone_id"
+    t.integer  "customer_status_category_id"
     t.string   "phone"
     t.string   "fax"
     t.string   "email"
-    t.string   "cell"
     t.integer  "sales_id"
-    t.string   "web"
-    t.integer  "category1_id"
-    t.integer  "category2_id"
-    t.boolean  "active",             :default => true
-    t.string   "biz_status"
+    t.boolean  "active",                      :default => true
     t.integer  "last_updated_by_id"
-    t.string   "quality_system"
+    t.integer  "quality_system_id"
     t.string   "employee_num"
     t.string   "revenue"
+    t.text     "customer_eval"
+    t.text     "main_biz"
+    t.text     "customer_taste"
     t.text     "note"
-    t.integer  "user_id"
-    t.datetime "created_at",                           :null => false
-    t.datetime "updated_at",                           :null => false
-    t.text     "custom_attributes"
+    t.datetime "created_at",                                    :null => false
+    t.datetime "updated_at",                                    :null => false
+    t.string   "web"
+  end
+
+  create_table "customerx_lead_logs", :force => true do |t|
+    t.integer  "sales_lead_id"
+    t.text     "log"
+    t.integer  "last_updated_by_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "customerx_quality_systems", :force => true do |t|
+    t.string   "name"
+    t.string   "brief_note"
+    t.boolean  "active"
+    t.integer  "last_updated_by_id"
+    t.integer  "ranking_order"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  create_table "customerx_sales_leads", :force => true do |t|
+    t.integer  "customer_id"
+    t.integer  "last_updated_by_id"
+    t.integer  "provider_id"
+    t.text     "lead_info"
+    t.text     "contact_instruction"
+    t.string   "lead_status"
+    t.boolean  "sale_success"
+    t.boolean  "close_lead"
+    t.datetime "close_lead_date"
+    t.integer  "close_lead_by_id"
+    t.string   "lead_source"
+    t.integer  "lead_quality"
+    t.integer  "lead_accuracy"
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
+    t.text     "lead_eval"
   end
 
   create_table "leasingx_lease_bookings", :force => true do |t|
